@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Spectrogram</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <h1>Live Spectrogram</h1>
+        <p class="subtitle">Real-time frequency analysis from your microphone</p>
+      </div>
+      <div class="status" id="status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Microphone off</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="spectrogram-wrap">
+        <canvas id="spectrogram" aria-label="Spectrogram display"></canvas>
+        <div class="axis-label axis-label--y">Hz</div>
+        <div class="axis-label axis-label--x">Time →</div>
+      </div>
+
+      <aside class="controls">
+        <section class="control-group">
+          <h2>Input</h2>
+          <button type="button" class="btn btn--primary" id="toggleMic">
+            <span class="btn-icon" id="micIcon">●</span>
+            Start microphone
+          </button>
+          <p class="hint" id="micHint">Requires microphone permission in your browser.</p>
+        </section>
+
+        <section class="control-group">
+          <h2>Colour gradient</h2>
+          <div class="gradient-grid" id="gradientGrid" role="radiogroup" aria-label="Colour gradient"></div>
+        </section>
+
+        <section class="control-group">
+          <h2>Display</h2>
+          <label class="field">
+            <span class="field-label">Sensitivity (dB floor)</span>
+            <input type="range" id="dbFloor" min="-100" max="-40" value="-85" step="1">
+            <span class="field-value" id="dbFloorValue">-85 dB</span>
+          </label>
+          <label class="field">
+            <span class="field-label">FFT resolution</span>
+            <select id="fftSize">
+              <option value="512">512 (fast)</option>
+              <option value="1024">1024</option>
+              <option value="2048" selected>2048</option>
+              <option value="4096">4096 (detailed)</option>
+            </select>
+          </label>
+          <label class="field field--checkbox">
+            <input type="checkbox" id="logScale" checked>
+            <span>Log frequency scale</span>
+          </label>
+          <label class="field field--checkbox">
+            <input type="checkbox" id="showGrid">
+            <span>Frequency grid overlay</span>
+          </label>
+        </section>
+
+        <section class="control-group stats">
+          <h2>Levels</h2>
+          <dl class="stat-list">
+            <div><dt>Sample rate</dt><dd id="sampleRate">—</dd></div>
+            <div><dt>Peak frequency</dt><dd id="peakFreq">—</dd></div>
+            <div><dt>Peak level</dt><dd id="peakLevel">—</dd></div>
+          </dl>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
